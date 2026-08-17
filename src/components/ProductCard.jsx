@@ -6,7 +6,10 @@ export default function ProductCard({ product }) {
     <div className="product-card">
 
          {/* the product image */}
-        <img src={product.image} className="product-card-image"></img>
+        <img
+         src={product.image} 
+         alt={product.name}
+         className="product-card-image"></img>
 
          {/* the product name and price */}
         <div className="product-card-content">
