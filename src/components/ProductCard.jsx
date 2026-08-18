@@ -19,7 +19,9 @@ export default function ProductCard({ product }) {
 
             {/* the link and buttons inside a container */}
             <div className="product-card-actions">
-              <Link className="btn btn-secondary">View Details</Link>
+              <Link className="btn btn-secondary" to={`/products/${product.id}`}>
+                View Details
+            </Link>
               <button className="btn btn-primary">Add to cart</button>
              </div>
         </div>

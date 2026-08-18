@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createContext } from "react";
+import { useContext, createContext } from "react";
 
  export let AuthContext = createContext(null);
 
@@ -52,4 +52,14 @@ export default function AuthProvider({children}) {
     }
 
     return <AuthContext.Provider value={{ signUp, user, logout, login }}>{children}</AuthContext.Provider>;
+}
+
+
+//MARK: - CUSTOM HOOK TO EASILY USE AUTH CONTEXT
+
+// every hook has to start with the name use
+export function useAuth() {
+    let context = useContext(AuthContext);
+
+    return context;
 }
