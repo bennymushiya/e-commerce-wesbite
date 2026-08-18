@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../data/products";
+import { useCart } from "../context/CartContext";
+
 
 export default function ProductDetails() {
     //MARK: - PROPERTIES
@@ -26,12 +28,19 @@ export default function ProductDetails() {
     // when the id changes, we run the useeffect again
     }, [id]);
 
-    // guard clause: on the first render, product is still null (useEffect hasn't run yet),
+
+// guard clause: on the first render, product is still null (useEffect hasn't run yet),
 // so we return early with a loading message to avoid crashing on product.image/.name below.
 // once useEffect sets the real product, this component re-renders and skips past this block.
 if (!product) {
     return <div className="page"><div className="container">Loading...</div></div>;
   }  
+
+
+  let { addToCart, cartItems } = useCart([]);
+  let productInCart = cartItems.find((item) => item.id === product.id);
+
+  let productQaunitityLabel = productInCart ? `(${productInCart.quantity})` : "";
 
     //MARK: - BODY
     return (
@@ -46,7 +55,9 @@ if (!product) {
                     <h1 className="product-detail-name">{product.name}</h1>
                     <p className="product-detail-price">${product.price}</p>
                     <p className="product-detail-description">{product.description}</p>
-                    <button className="btn btn-primary">Add to Cart</button>
+                    <button className="btn btn-primary" onClick={() => addToCart(product.id)}>
+                        Add to Cart {productQaunitityLabel}
+                        </button>
                 </div>
             </div>
         </div>
